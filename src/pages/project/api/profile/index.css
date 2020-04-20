@@ -1,0 +1,21 @@
+.api_paramters_top {
+    display: flex;
+    flex-direction: row;
+}
+
+.api_paramters_top span {
+    flex: 1;
+    color: #000;
+}
+
+.api_paramters_content {
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.api_paramters_content span {
+    flex: 1;
+    color: #434343;
+}

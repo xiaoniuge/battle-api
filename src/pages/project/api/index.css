@@ -1,0 +1,36 @@
+.api_layout {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.content {
+    margin-left: 20px;
+    background: white;
+    padding: 20px;
+}
+
+.api_top {
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: white;
+}
+
+.write_area {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+}
+
+.new_api_button {
+    margin-right: 10px;
+}
+
+.api_title {
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+}

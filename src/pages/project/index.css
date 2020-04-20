@@ -1,11 +1,36 @@
+.project_main {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.project_top {
+  height: 100px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: white;
+}
+
+.new_project_button {
+  align-self: flex-end;
+}
+
+.project_title {
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 .project_list {
   display: flex;
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap-reverse;
   justify-content: space-evenly;
-  padding-left: 5%;
-  padding-right: 5%;
 }
 
 .project_list_item {

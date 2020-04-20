@@ -10,7 +10,10 @@ export default {
         {
           path: '/home',
           component: '../pages/home',
-          routes: [{ path: '/home/project/list', component: '../pages/project' }],
+          routes: [
+            { path: '/home/project/list', component: '../pages/project' },
+            { path: '/home/api/list', component: '../pages/project/api' },
+          ],
         },
       ],
     },

@@ -1,0 +1,50 @@
+.url_form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.query_param_top {
+    display: flex;
+    flex-direction: row;
+}
+
+.query_param_top span {
+    flex: 1;
+    color: #000;
+}
+
+.query_param {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.query_param span {
+    flex: 1;
+    margin-right: 10px;
+    align-self: center;
+}
+
+.header_top {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.header_top span {
+    flex: 1;
+    color: #000;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.header span {
+    flex: 1;
+    margin-right: 10px;
+    align-self: center;
+}

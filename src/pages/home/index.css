@@ -32,11 +32,6 @@
   flex: 1;
 }
 
-.content_top {
-  height: 200px;
-  background: white;
-}
-
 .content_children {
   border-radius: 5px;
   height: 100%;
@@ -44,7 +39,5 @@
 }
 
 .footer {
-  background: #1f1f1f;
-  color: white;
   text-align: center;
 }
