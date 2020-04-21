@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Tag, Tabs, Input, Button, Select, Divider } from 'antd';
+import { Tag, Tabs, Input, Button, Select, Divider, Empty } from 'antd';
 import styles from './index.css';
 import JSONEdit from '../../../../component/json/edit';
 
@@ -33,14 +33,38 @@ const localHeaders = [
 
 const ApiTest = props => {
     const { api } = props;
-    console.log(api);
+
+    const [response, setResponse] = useState({});
+
+    const [baseUrl, setBaseUrl] = useState('');
+
+    const [headers, setHeaders] = useState([]);
+
+    const [param, setParam] = useState({});
+
+    const [httpMethod, setHttpMethod] = useState('GET');
+
+    const [body, setBody] = useState({});
+
+    useEffect(() => {
+        setResponse({
+            success: true,
+            result: {
+                sid: '782d0sds20sds0ds0',
+                role: 'admin',
+            },
+            error: '',
+        });
+        setBaseUrl(localhost);
+        setHeaders(localHeaders);
+    }, []);
 
     const selecthandler = (value, option) => {
-        console.log('value: ', value, 'option: ', option);
+        setHttpMethod(value);
     };
 
     const httpMethodSelector = (
-        <Select defaultValue="GET" onChange={selecthandler}>
+        <Select defaultValue={api.httpMethod} onChange={selecthandler}>
             <Option value="GET">
                 <Tag color="#13c2c2">GET</Tag>
             </Option>
@@ -56,24 +80,22 @@ const ApiTest = props => {
         </Select>
     );
 
-    const [response, setResponse] = useState({});
+    const paramHandler = (e, item) => {
+        let tmp = { ...param };
+        tmp[item.name] = e.target.value;
+        setParam(tmp);
+    };
 
-    const [baseUrl, setBaseUrl] = useState('');
+    const bodyHandler = (json, jsObject) => {
+        console.log(json, jsObject);
+    };
 
-    const [headers, setHeaders] = useState([]);
-
-    useEffect(() => {
-        setResponse({
-            success: true,
-            result: {
-                sid: '782d0sds20sds0ds0',
-                role: 'admin',
-            },
-            error: '',
-        });
-        setBaseUrl(localhost);
-        setHeaders(localHeaders);
-    }, []);
+    const sendClick = () => {
+        console.log('URL : ', baseUrl + api.url);
+        console.log('parma : ', param);
+        console.log('httpMethod : ', httpMethod);
+        console.log('headers : ', headers);
+    };
 
     return (
         <>
@@ -81,38 +103,45 @@ const ApiTest = props => {
                 <Input
                     style={{ flex: 1 }}
                     value={baseUrl}
+                    onChange={e => setBaseUrl(e.target.value)}
                     addonBefore={httpMethodSelector}
-                    addonAfter={<span>{'/login'}</span>}
+                    addonAfter={<span>{api.url}</span>}
                 />
                 <div style={{ marginLeft: 20 }}>
-                    <Button type="primary">发送</Button>
+                    <Button type="primary" onClick={sendClick}>
+                        发送
+                    </Button>
                 </div>
             </div>
             <div>
                 <Tabs defaultActiveKey="0">
                     <TabPane tab="paramters" key="0">
-                        <QueryParam paramters={api.paramters} />
+                        <QueryParam paramters={api.paramters} paramHandler={paramHandler} />
                     </TabPane>
                     <TabPane tab="headers" key="1">
                         <Headers headers={headers} />
                     </TabPane>
                     <TabPane tab="body" key="2">
-                        <Body />
+                        <Body bodyHandler={bodyHandler} />
                     </TabPane>
                 </Tabs>
             </div>
             <div style={{ marginTop: 10, padding: 16 }}>
                 <h3 style={{ fontWeight: '600' }}>Response</h3>
                 <Divider />
-                <pre style={{ background: '#262626', padding: 10, color: '#87e8de' }}>
-                    {JSON.stringify(response, null, 4)}
-                </pre>
+                {Object.keys(response).length === 0 ? (
+                    <Empty />
+                ) : (
+                    <pre style={{ background: '#262626', padding: 10, color: '#87e8de' }}>
+                        {JSON.stringify(response, null, 4)}
+                    </pre>
+                )}
             </div>
         </>
     );
 };
 
-const QueryParam = ({ paramters }) => {
+const QueryParam = ({ paramters, paramHandler }) => {
     return (
         <div style={{ padding: 16 }}>
             <div className={styles.query_param_top}>
@@ -125,7 +154,7 @@ const QueryParam = ({ paramters }) => {
                 <div className={styles.query_param} key={index}>
                     <span>{item.name}</span>
                     <span>
-                        <Input placeholder="value..." />
+                        <Input placeholder="value..." onChange={e => paramHandler(e, item)} />
                     </span>
                     <span>{item.description}</span>
                 </div>
@@ -156,10 +185,10 @@ const Headers = ({ headers }) => {
     );
 };
 
-const Body = () => {
+const Body = ({ bodyHandler }) => {
     return (
         <div style={{ padding: 16 }}>
-            <JSONEdit />
+            <JSONEdit bodyHandler={bodyHandler} />
         </div>
     );
 };

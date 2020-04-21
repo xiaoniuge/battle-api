@@ -7,9 +7,9 @@ const sampleObject = {
     value: 'value',
 };
 
-const JSONEdit = () => {
+const JSONEdit = ({ bodyHandler }) => {
     const onChange = object => {
-        console.log(object);
+        bodyHandler(object.json, object.jsObject);
     };
 
     return (

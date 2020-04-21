@@ -5,7 +5,7 @@ import styles from './index.css';
 const ApiProfile = props => {
     const { api } = props;
     return (
-        <>
+        <div style={{ padding: 16 }}>
             <div>
                 <h3 style={{ fontWeight: '600' }}>基本信息</h3>
                 <Divider />
@@ -53,13 +53,13 @@ const ApiProfile = props => {
                 )}
             </div>
             <div style={{ paddingTop: 20 }}>
-                <h3 style={{ fontWeight: '600' }}>请求响应</h3>
+                <h3 style={{ fontWeight: '600' }}>响应结果</h3>
                 <Divider />
                 <pre style={{ background: '#262626', padding: 10, color: '#87e8de' }}>
                     {JSON.stringify(api.response, null, 4)}
                 </pre>
             </div>
-        </>
+        </div>
     );
 };
 

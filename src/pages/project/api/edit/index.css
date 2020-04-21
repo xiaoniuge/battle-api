@@ -1,0 +1,9 @@
+.tabs_title_align {
+    text-align: center;
+}
+
+.save_button_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

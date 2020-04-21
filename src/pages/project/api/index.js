@@ -4,6 +4,7 @@ import { FolderOpenOutlined, ApiOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import ApiProfile from './profile';
 import ApiTest from './test';
+import ApiEdit from './edit';
 
 const { Content, Sider } = Layout;
 const { TabPane } = Tabs;
@@ -125,7 +126,7 @@ const ApiList = props => {
                                 Content of Tab Pane 3
                             </TabPane>
                             <TabPane tab="编辑" key="4">
-                                Content of Tab Pane 4
+                                <ApiEdit />
                             </TabPane>
                         </Tabs>
                     </div>
