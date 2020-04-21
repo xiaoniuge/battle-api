@@ -99,7 +99,7 @@ const ApiTest = props => {
 
     return (
         <>
-            <div className={styles.url_form}>
+            <div className={styles.url_form} style={{ marginTop: 10, padding: 16 }}>
                 <Input
                     style={{ flex: 1 }}
                     value={baseUrl}
@@ -113,7 +113,7 @@ const ApiTest = props => {
                     </Button>
                 </div>
             </div>
-            <div>
+            <div style={{ marginTop: 10, padding: 16 }}>
                 <Tabs defaultActiveKey="0">
                     <TabPane tab="paramters" key="0">
                         <QueryParam paramters={api.paramters} paramHandler={paramHandler} />

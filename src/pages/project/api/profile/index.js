@@ -1,6 +1,8 @@
 import React from 'react';
-import { Descriptions, Tag, Divider, Empty, Checkbox } from 'antd';
+import { Descriptions, Tag, Divider, Empty, Checkbox, Typography } from 'antd';
 import styles from './index.css';
+
+const { Paragraph } = Typography;
 
 const ApiProfile = props => {
     const { api } = props;
@@ -18,12 +20,7 @@ const ApiProfile = props => {
                         {api.description}
                     </Descriptions.Item>
                     <Descriptions.Item label={<Label label="MOCK-URL" />}>
-                        <span style={{ color: '#1890ff', cursor: 'pointer' }}>
-                            {'http://mock.cn' + api.url}
-                        </span>
-                        <Tag color="#1890ff" style={{ marginLeft: 10, cursor: 'pointer' }}>
-                            复制
-                        </Tag>
+                        <Paragraph copyable>{'http://mock.cn' + api.url}</Paragraph>
                     </Descriptions.Item>
                 </Descriptions>
             </div>

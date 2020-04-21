@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Select, Tabs, Button, Tag, Divider, Row } from 'antd';
+import { Form, Input, Select, Tabs, Button, Tag, Divider } from 'antd';
 import styles from './index.css';
 
 const { Option } = Select;
@@ -33,6 +33,16 @@ const httpMethodSelector = () => {
     );
 };
 
+const nodeSelector = () => {
+    return (
+        <Select>
+            <Option value="user">
+                <Tag color="#13c2c2">用户</Tag>
+            </Option>
+        </Select>
+    );
+};
+
 const ApiEdit = () => {
     const [form] = Form.useForm();
     return (
@@ -40,8 +50,8 @@ const ApiEdit = () => {
             <Form
                 {...layout}
                 form={form}
-                onFinish={values => console.log(values)}
-                initialValues={{ httpMethod: 'GET' }}
+                onFinish={values => console.log('values', values)}
+                initialValues={{ httpMethod: 'GET', node: 'user' }}
             >
                 <ApiBaseInfo />
                 <ApiRequsetParam />
@@ -70,7 +80,7 @@ const ApiBaseInfo = () => {
                 </Form.Item>
 
                 <Form.Item name="node" label="所属节点">
-                    <Input />
+                    {nodeSelector()}
                 </Form.Item>
 
                 <Form.Item name="description" label="简介">
