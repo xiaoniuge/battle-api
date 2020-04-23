@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Tag, Tabs, Input, Button, Select, Divider, Empty } from 'antd';
 import styles from './index.css';
-import JSONEdit from '../../../../component/json/edit';
+import JSONEdit from '../../../../../component/json/edit';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
