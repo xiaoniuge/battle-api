@@ -64,7 +64,7 @@ const ApiTest = props => {
     };
 
     const httpMethodSelector = (
-        <Select defaultValue={api.httpMethod} onChange={selecthandler}>
+        <Select defaultValue={api ? api.httpMethod : 'GET'} onChange={selecthandler}>
             <Option value="GET">
                 <Tag color="#13c2c2">GET</Tag>
             </Option>
@@ -99,44 +99,48 @@ const ApiTest = props => {
 
     return (
         <>
-            <div className={styles.url_form} style={{ marginTop: 10, padding: 16 }}>
-                <Input
-                    style={{ flex: 1 }}
-                    value={baseUrl}
-                    onChange={e => setBaseUrl(e.target.value)}
-                    addonBefore={httpMethodSelector}
-                    addonAfter={<span>{api.url}</span>}
-                />
-                <div style={{ marginLeft: 20 }}>
-                    <Button type="primary" onClick={sendClick}>
-                        发送
-                    </Button>
-                </div>
-            </div>
-            <div style={{ marginTop: 10, padding: 16 }}>
-                <Tabs defaultActiveKey="0">
-                    <TabPane tab="paramters" key="0">
-                        <QueryParam paramters={api.paramters} paramHandler={paramHandler} />
-                    </TabPane>
-                    <TabPane tab="headers" key="1">
-                        <Headers headers={headers} />
-                    </TabPane>
-                    <TabPane tab="body" key="2">
-                        <Body bodyHandler={bodyHandler} />
-                    </TabPane>
-                </Tabs>
-            </div>
-            <div style={{ marginTop: 10, padding: 16 }}>
-                <h3 style={{ fontWeight: '600' }}>Response</h3>
-                <Divider />
-                {Object.keys(response).length === 0 ? (
-                    <Empty />
-                ) : (
-                    <pre style={{ background: '#262626', padding: 10, color: '#87e8de' }}>
-                        {JSON.stringify(response, null, 4)}
-                    </pre>
-                )}
-            </div>
+            {api ? (
+                <>
+                    <div className={styles.url_form} style={{ marginTop: 10, padding: 16 }}>
+                        <Input
+                            style={{ flex: 1 }}
+                            value={baseUrl}
+                            onChange={e => setBaseUrl(e.target.value)}
+                            addonBefore={httpMethodSelector}
+                            addonAfter={<span>{api.url}</span>}
+                        />
+                        <div style={{ marginLeft: 20 }}>
+                            <Button type="primary" onClick={sendClick}>
+                                发送
+                            </Button>
+                        </div>
+                    </div>
+                    <div style={{ marginTop: 10, padding: 16 }}>
+                        <Tabs defaultActiveKey="0">
+                            <TabPane tab="paramters" key="0">
+                                <QueryParam paramters={api.paramters} paramHandler={paramHandler} />
+                            </TabPane>
+                            <TabPane tab="headers" key="1">
+                                <Headers headers={headers} />
+                            </TabPane>
+                            <TabPane tab="body" key="2">
+                                <Body bodyHandler={bodyHandler} />
+                            </TabPane>
+                        </Tabs>
+                    </div>
+                    <div style={{ marginTop: 10, padding: 16 }}>
+                        <h3 style={{ fontWeight: '600' }}>Response</h3>
+                        <Divider />
+                        {Object.keys(response).length === 0 ? (
+                            <Empty />
+                        ) : (
+                            <pre style={{ background: '#262626', padding: 10, color: '#87e8de' }}>
+                                {JSON.stringify(response, null, 4)}
+                            </pre>
+                        )}
+                    </div>
+                </>
+            ) : null}
         </>
     );
 };

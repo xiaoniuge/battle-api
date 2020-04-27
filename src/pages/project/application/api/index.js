@@ -13,10 +13,62 @@ const { TabPane } = Tabs;
 const ApiList = props => {
     const [nodes, setNodes] = useState([]);
     const [drawerNewVisible, setDrawerNewVisible] = useState(false);
+    const [currentApi, setCurrentApi] = useState(null);
+    const [defaultSelectedKeys, setDefaultSelectedKeys] = useState([]);
+    const [defaultOpenKeys, setDefaultOpenKeys] = useState([]);
     const [form] = Form.useForm();
     useEffect(() => {
-        setNodes([{ name: '用户', apis: [{ description: '登录', api: '/login' }] }]);
+        let nodesTmp = [
+            {
+                id: 1,
+                name: '用户',
+                apis: [
+                    {
+                        id: 1,
+                        url: '/login',
+                        httpMethod: 'POST',
+                        description: '登录接口',
+                        paramters: [
+                            {
+                                name: 'username',
+                                javaType: 'String',
+                                description: '用户名',
+                                isNecessary: true,
+                            },
+                            {
+                                name: 'password',
+                                javaType: 'String',
+                                description: '密码',
+                                isNecessary: true,
+                            },
+                        ],
+                        response: {
+                            success: true,
+                            result: {
+                                sid: '782d0sds20sds0ds0',
+                                role: 'admin',
+                            },
+                            error: '',
+                        },
+                    },
+                ],
+            },
+        ];
+        setNodes(nodesTmp);
+        setCurrentApi(nodesTmp[0].apis[0]);
+        setDefaultOpenKeys([nodesTmp[0].id + '']);
+        setDefaultSelectedKeys([nodesTmp[0].apis[0].id + '']);
     }, []);
+    const menuItemClickHandler = key => {
+        for (let i = 0; i < nodes.length; i++) {
+            for (let k = 0; k < nodes[i].apis.length; k++) {
+                if (nodes[i].apis[k].id === key) {
+                    setCurrentApi(nodes[i].apis[k]);
+                    return;
+                }
+            }
+        }
+    };
     return (
         <>
             <Layout className={styles.api_layout}>
@@ -39,99 +91,50 @@ const ApiList = props => {
                 </Header>
                 <Layout>
                     <Sider theme="light">
-                        <Menu defaultOpenKeys={['0']} defaultSelectedKeys={['0']} mode="inline">
-                            {nodes.map((node, index) => (
-                                <Menu.SubMenu
-                                    key={index}
-                                    title={
-                                        <span>
-                                            <FolderOpenOutlined />
-                                            <span>{node.name}</span>
-                                        </span>
-                                    }
-                                >
-                                    {!node.apis
-                                        ? null
-                                        : node.apis.map((api, index) => (
-                                              <Menu.Item key={index}>
-                                                  <ApiOutlined />
-                                                  <span>{api.description}</span>
-                                              </Menu.Item>
-                                          ))}
-                                </Menu.SubMenu>
-                            ))}
-                        </Menu>
+                        {!nodes || nodes.length === 0 ? null : (
+                            <Menu
+                                defaultOpenKeys={defaultOpenKeys}
+                                defaultSelectedKeys={defaultSelectedKeys}
+                                mode="inline"
+                                onClick={(item, key, keyPath) => menuItemClickHandler(item.key)}
+                            >
+                                {nodes.map(node => (
+                                    <Menu.SubMenu
+                                        key={node.id}
+                                        title={
+                                            <span>
+                                                <FolderOpenOutlined />
+                                                <span>{node.name}</span>
+                                            </span>
+                                        }
+                                    >
+                                        {!node.apis
+                                            ? null
+                                            : node.apis.map(api => (
+                                                  <Menu.Item key={api.id}>
+                                                      <ApiOutlined />
+                                                      <span>{api.description}</span>
+                                                  </Menu.Item>
+                                              ))}
+                                    </Menu.SubMenu>
+                                ))}
+                            </Menu>
+                        )}
                     </Sider>
                     <Content className={styles.content}>
                         <div>
-                            <Tabs defaultActiveKey="2">
+                            <Tabs defaultActiveKey="1">
                                 <TabPane tab="详情" key="1">
-                                    <ApiProfile
-                                        api={{
-                                            url: '/login',
-                                            httpMethod: 'POST',
-                                            description: '登录接口',
-                                            paramters: [
-                                                {
-                                                    name: 'username',
-                                                    javaType: 'String',
-                                                    description: '用户名',
-                                                    isNecessary: true,
-                                                },
-                                                {
-                                                    name: 'password',
-                                                    javaType: 'String',
-                                                    description: '密码',
-                                                    isNecessary: true,
-                                                },
-                                            ],
-                                            response: {
-                                                success: true,
-                                                result: {
-                                                    sid: '782d0sds20sds0ds0',
-                                                    role: 'admin',
-                                                },
-                                                error: '',
-                                            },
-                                        }}
-                                    />
+                                    <ApiProfile api={currentApi} />
+                                </TabPane>
+                                <TabPane tab="编辑" key="3">
+                                    <ApiEdit api={currentApi} />
                                 </TabPane>
                                 <TabPane tab="测试" key="2">
-                                    <ApiTest
-                                        api={{
-                                            url: '/login',
-                                            httpMethod: 'POST',
-                                            description: '登录接口',
-                                            paramters: [
-                                                {
-                                                    name: 'username',
-                                                    javaType: 'String',
-                                                    description: '用户名',
-                                                    isNecessary: true,
-                                                },
-                                                {
-                                                    name: 'password',
-                                                    javaType: 'String',
-                                                    description: '密码',
-                                                    isNecessary: true,
-                                                },
-                                            ],
-                                            response: {
-                                                success: true,
-                                                result: {
-                                                    sid: '782d0sds20sds0ds0',
-                                                    role: 'admin',
-                                                },
-                                                error: '',
-                                            },
-                                        }}
-                                    />
+                                    <ApiTest api={currentApi} />
                                 </TabPane>
-                                <TabPane tab="Mock" key="3">
+                                <TabPane tab="Mock" key="4">
                                     Content of Tab Pane 3
-                                </TabPane>
-                                <TabPane tab="编辑" key="4">
-                                    <ApiEdit />
                                 </TabPane>
                             </Tabs>
                         </div>

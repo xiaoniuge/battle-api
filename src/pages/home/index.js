@@ -15,7 +15,11 @@ const BambooApiLayout = props => {
                         className={styles.menu}
                         theme="dark"
                         mode="horizontal"
-                        defaultSelectedKeys={[window.location.pathname]}
+                        defaultSelectedKeys={[
+                            window.location.pathname.indexOf('/home/project/application/')
+                                ? '/home/project/application/list'
+                                : window.location.pathname,
+                        ]}
                     >
                         <Menu.Item key="/home/project/application/list">
                             <Link to="/home/project/application/list">应用</Link>

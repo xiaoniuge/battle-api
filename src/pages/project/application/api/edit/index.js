@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Select, Tabs, Button, Tag, Divider } from 'antd';
 import styles from './index.css';
 
@@ -33,17 +33,18 @@ const httpMethodSelector = () => {
     );
 };
 
-const nodeSelector = () => {
-    return (
-        <Select>
-            <Option value="user">
-                <Tag color="#13c2c2">用户</Tag>
-            </Option>
-        </Select>
-    );
-};
+// const nodeSelector = () => {
+//     return (
+//         <Select>
+//             <Option value="user">
+//                 <Tag color="#13c2c2">用户</Tag>
+//             </Option>
+//         </Select>
+//     );
+// };
 
-const ApiEdit = () => {
+const ApiEdit = props => {
+    const { api } = props;
     const [form] = Form.useForm();
     return (
         <div style={{ padding: 16 }}>
@@ -51,11 +52,11 @@ const ApiEdit = () => {
                 {...layout}
                 form={form}
                 onFinish={values => console.log('values', values)}
-                initialValues={{ httpMethod: 'GET', node: 'user' }}
+                initialValues={api}
             >
                 <ApiBaseInfo />
                 <ApiRequsetParam />
-                <ApiResponse />
+                <ApiResponse response={api.response} />
                 <div className={styles.save_button_box}>
                     <Button type="primary" htmlType="submit">
                         保存
@@ -79,9 +80,9 @@ const ApiBaseInfo = () => {
                     {httpMethodSelector()}
                 </Form.Item>
 
-                <Form.Item name="node" label="所属节点">
+                {/* <Form.Item name="node" label="所属节点">
                     {nodeSelector()}
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item name="description" label="简介">
                     <Input />
@@ -111,11 +112,14 @@ const ApiRequsetParam = () => {
     );
 };
 
-const ApiResponse = () => {
+const ApiResponse = response => {
     return (
         <div style={{ marginTop: 16 }}>
             <h3 style={{ fontWeight: '600' }}>响应结果</h3>
             <Divider />
+            <pre style={{ background: '#262626', padding: 10, color: '#87e8de' }}>
+                {JSON.stringify(response, null, 4)}
+            </pre>
         </div>
     );
 };
