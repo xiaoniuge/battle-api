@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[2],{D7Ff:function(t,e,p){"use strict";p.r(e);p("+L6B");var a=p("2/Rp"),i=p("q1tI"),n=p.n(i),r=t=>{var e=t.history;return n.a.createElement(a["a"],{type:"primary",onClick:()=>e.push("/home/project/application/list")},"click")};e["default"]=r}}]);
